@@ -51,6 +51,8 @@ public class InscriptionService {
                     inscription.setSpecialite(updatedInscription.getSpecialite());
                     inscription.setEtablissement(updatedInscription.getEtablissement());
                     inscription.setConcours(updatedInscription.getConcours());
+                    inscription.setStatut(updatedInscription.getStatut());
+
                     return inscriptionRepository.save(inscription);
                 })
                 .orElseGet(() -> {

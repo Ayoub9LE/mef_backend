@@ -63,6 +63,17 @@ public class Inscription {
 
     @Column(name = "etablissement")
     private String etablissement;
+    @Column(name = "statut", columnDefinition = "varchar(20) default 'En cours'")
+    private String statut = "En cours";
+
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
 
     @Column(name = "concours")
     private String concours;
