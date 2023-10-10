@@ -11,8 +11,7 @@ RUN mvn clean package -DskipTests
 
 # Use AdoptOpenJDK for base image.
 # It's important to use OpenJDK because it doesn't have a license restriction for commercial use.
-FROM adoptopenjdk:17-jre-hotspot
-
+FROM openjdk:17-oracle
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /app/target/*.jar /mef_backend.jar
 

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com</groupId>
 	<artifactId>mef</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>mef_concours_project</name>
 	<description>projet de gestion des insciprions des concours</description>
 	<properties>
