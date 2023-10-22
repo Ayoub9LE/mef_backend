@@ -53,5 +53,16 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Set up kubectl credentials from Jenkins secret
+                    withCredentials([file(credentialsId: mycubeconfig, variable: 'KUBECONFIG')]) {
+                        // Apply Kubernetes configurations
+                        sh "kubectl apply -f ${deployment.yaml}"
+                    }
+                }
+            }
+        }
     }
 }
