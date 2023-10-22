@@ -57,7 +57,7 @@ pipeline {
     steps {
         script {
             // Set up kubectl credentials from Jenkins secret
-            withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
+            withCredentials([file(credentialsId: 'mykubeconfig',variable: 'KUBECONFIG')]) {
                 // Apply Kubernetes configurations
                 sh "kubectl apply -f deployment.yaml"
                    }
