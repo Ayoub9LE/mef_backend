@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mef-backend-deployment
+  labels:
+    app: mef-backend
+spec:
+  replicas: 3  # Desired number of replicas
+  selector:
+    matchLabels:
+      app: mef-backend
+  template:
+    metadata:
+      labels:
+        app: mef-backend
+    spec:
+      containers:
+      - name: mef-backend-container
+        image: ayoub9le/mef_backend:tagname  # Replace with your Docker image name and tag
+        ports:
+        - containerPort: 9090  # Assuming your application runs on port 9090
