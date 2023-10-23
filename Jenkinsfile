@@ -28,15 +28,7 @@ pipeline {
                         }
                     }
          }
-        stage('Start PostgreSQL Container') {
-            steps {
-                script {
-                    // Run PostgreSQL container
-                    docker.image('postgres')
-                        .withRun('-e POSTGRES_DB=electric_cars -e POSTGRES_USER=mef -e POSTGRES_PASSWORD=password')
-                }
-            }
-        }
+        
         stage('Build Docker Image') {
             steps {
                 script {
