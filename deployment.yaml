@@ -36,22 +36,7 @@ spec:
         env:
         - name: SPRING_DATASOURCE_URL
           value: jdbc:postgresql://postgres-service:5432/electric_cars
-        - name: SPRING_DATASOURCE_USERNAME
-          value: mef
-        - name: SPRING_DATASOURCE_PASSWORD
-          value: password
-        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-          value: update
-        - name: SPRING_JPA_SHOW_SQL
-          value: "true"
-        - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
-          value: org.hibernate.dialect.PostgreSQLDialect
-        - name: SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL
-          value: "true"
-        - name: SERVER_PORT
-          value: "9090"
-        - name: SECURITY_JWT_TOKEN_SECRET_KEY
-          value: my-secret-key
+        # ... (autres variables d'environnement)
 
 ---
 apiVersion: v1
