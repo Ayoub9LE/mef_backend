@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: mef-backend-container
-    image: ayoub9le/mef_backend:tagname
+    image: ayoub9le/mef_backend:latest
     ports:
     - containerPort: 9090
 
@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mef-backend-container
-        image: ayoub9le/mef_backend:tagname  # Replace with your Docker image name and tag
+        image: ayoub9le/mef_backend:latest  # Replace with your Docker image name and tag
         ports:
         - containerPort: 9090  # Assuming your application runs on port 9090
 
