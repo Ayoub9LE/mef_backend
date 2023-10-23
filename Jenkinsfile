@@ -16,7 +16,7 @@ pipeline {
               steps {
                   script {
             // Start a PostgreSQL container
-                     sh '''
+                     bat '''
                      docker run --name postgres-test -e POSTGRES_USER=mef -e POSTGRES_PASSWORD=password -e POSTGRES_DB=electric_cars -d postgres:latest
                       '''
             // Wait for a few seconds to ensure PostgreSQL is fully initialized
