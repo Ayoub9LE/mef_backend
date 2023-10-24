@@ -2,17 +2,18 @@ version: '3'
 
 services:
   mef-backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ayoub9le/mef_backend:latest
     ports:
       - "9090:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/electric_cars
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-service:5432/electric_cars
     depends_on:
-      - postgres
+      - postgres-service
+    command: ["./wait-for-it.sh", "postgres-service:5432", "--", "java", "-jar", "your-app.jar"]
+    volumes:
+      - ./wait-for-it.sh:/app/wait-for-it.sh
 
-  postgres:
+  postgres-service:
     image: postgres:latest
     environment:
       POSTGRES_USER: mef
