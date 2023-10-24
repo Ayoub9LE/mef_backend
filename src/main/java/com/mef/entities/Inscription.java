@@ -63,7 +63,7 @@ public class Inscription {
 
     @Column(name = "etablissement")
     private String etablissement;
-    @Column(name = "statut", columnDefinition = "varchar(20) default 'En cours'")
+    @Column(name = "statut")
     private String statut = "En cours";
 
 
