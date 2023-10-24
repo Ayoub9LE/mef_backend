@@ -12,74 +12,69 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        stage('Start PostgreSQL') {
-              steps {
-                  script {
-            // Start a PostgreSQL container
-                     bat '''
-                     docker run --name postgres-test -e POSTGRES_USER=mef -e POSTGRES_PASSWORD=password -e POSTGRES_DB=electric_cars -d postgres:latest
-                      '''
-            // Wait for a few seconds to ensure PostgreSQL is fully initialized
-                   sleep 15
+        
+        stage('Docker Compose Build and Up') {
+            steps {
+                script {
+                    bat 'docker-compose build'
+                    bat 'docker-compose up -d'
+                }
+            }
         }
-    }
-}
 
-        
+        stage('Integration Tests') {
+            steps {
+                script {
+                    bat 'mvn integration-test'
+                }
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
 
+        stage('Docker Compose Down') {
+            steps {
+                script {
+                    //sh 'docker-compose down'
+                }
+            }
+        }
 
-        stage('Unit Test') {
-                    steps {
-                        script {
-                            // Run unit tests and generate test reports in JUnit format
-                            bat 'mvn test surefire-report:report'
-                        }
-                    }
-                    post {
-                        always {
-                            // Archive the test results
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    }
-         }
-        
         stage('Build Docker Image') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                         bat "docker build -t ayoub9le/mef_backend:latest ."
-                        // Ensure to logout from Docker after performing the Docker operations
                         bat "docker logout"
                     }
                 }
             }
         }
+
         stage('Push Backend Docker Image to the Docker Hub') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-                        // You may not need to pull the image before pushing if you're building it fresh
-                        bat "docker pull ayoub9le/mef_backend:latest"
                         bat "docker push ayoub9le/mef_backend:latest"
                         bat "docker logout"
                     }
                 }
             }
         }
+
         stage('Deploy to Kubernetes') {
-    steps {
-        script {
-            // Set up kubectl credentials from Jenkins secret
-            withCredentials([file(credentialsId: 'mykubeconfig',variable: 'KUBECONFIG')]) {
-                // Apply Kubernetes configurations
-                bat "kubectl apply -f deployment.yaml"
-                   }
-               }
-           }
-       }
-
-
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
+                        bat "kubectl apply -f deployment.yaml"
+                    }
+                }
+            }
+        }
     }
 }
