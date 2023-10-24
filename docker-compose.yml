@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mef-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/electric_cars
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: mef
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: electric_cars
+    ports:
+      - "5432:5432"
