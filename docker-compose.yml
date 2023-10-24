@@ -9,9 +9,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-service:5432/electric_cars
     depends_on:
       - postgres-service
-    command: ["./wait-for-it.sh", "postgres-service:5432", "--", "java", "-jar", "your-app.jar"]
-    volumes:
-      - ./wait-for-it.sh:/app/wait-for-it.sh
 
   postgres-service:
     image: postgres:latest
